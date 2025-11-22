@@ -1,6 +1,6 @@
 flask
 flask-cors
 scikit-learn
-pandas
 numpy
 joblib
+# Removed pandas as it is heavy and not strictly needed for inference if we pass arrays

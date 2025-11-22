@@ -9,10 +9,12 @@ CORS(app)
 
 # Load Model
 MODEL_PATH = 'disease_model.pkl'
+# We will NOT train on startup in Vercel to save space/time. 
+# The model must be committed to the repo.
 if not os.path.exists(MODEL_PATH):
-    # Train on startup if missing (for demo convenience)
-    import train_model
-    train_model.train_model()
+    # Fallback: Create a dummy model or error out if model is missing in prod
+    # For now, we assume the user pushed the pkl file.
+    print("WARNING: Model file not found!")
 
 model = joblib.load(MODEL_PATH)
 
