@@ -1,43 +1,42 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import joblib
-import numpy as np
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Load Model
-MODEL_PATH = 'disease_model.pkl'
-# We will NOT train on startup in Vercel to save space/time. 
-# The model must be committed to the repo.
-if not os.path.exists(MODEL_PATH):
-    # Fallback: Create a dummy model or error out if model is missing in prod
-    # For now, we assume the user pushed the pkl file.
-    print("WARNING: Model file not found!")
-
-model = joblib.load(MODEL_PATH)
-
+# Lightweight Logic for Vercel Demo (Removes heavy ML dependencies)
 @app.route('/api/predict', methods=['POST'])
 def predict():
     data = request.json
-    # Expected features in order
-    features = [
-        data.get('fatigue', 0),
-        data.get('irregular_periods', 0),
-        data.get('weight_gain', 0),
-        data.get('hair_loss', 0),
-        data.get('excess_hair_growth', 0),
-        data.get('mood_swings', 0),
-        data.get('pelvic_pain', 0),
-        data.get('lump_in_breast', 0),
-        data.get('frequent_urination', 0),
-        data.get('thirst', 0)
-    ]
     
-    prediction = model.predict([features])[0]
+    # Extract features
+    fatigue = data.get('fatigue', 0)
+    irregular_periods = data.get('irregular_periods', 0)
+    weight_gain = data.get('weight_gain', 0)
+    hair_loss = data.get('hair_loss', 0)
+    excess_hair_growth = data.get('excess_hair_growth', 0)
+    mood_swings = data.get('mood_swings', 0)
+    pelvic_pain = data.get('pelvic_pain', 0)
+    lump_in_breast = data.get('lump_in_breast', 0)
+    frequent_urination = data.get('frequent_urination', 0)
+    thirst = data.get('thirst', 0)
+
+    # Prediction Logic (Matches the logic used to train the model)
+    prediction = "Healthy"
     
-    # Simple logic for recommendations
+    if lump_in_breast:
+        prediction = "Breast Cancer Risk (Consult Doctor)"
+    elif irregular_periods and excess_hair_growth and weight_gain:
+        prediction = "PCOS"
+    elif fatigue and hair_loss and weight_gain:
+        prediction = "Thyroid Disorder"
+    elif frequent_urination and thirst and fatigue:
+        prediction = "Diabetes"
+    elif fatigue and mood_swings and irregular_periods:
+        prediction = "Anemia"
+
+    # Recommendations
     recommendations = {
         "Healthy": "Keep up the good lifestyle! Regular checkups are still recommended.",
         "PCOS": "Consult a gynecologist. Maintain a healthy diet and exercise.",
