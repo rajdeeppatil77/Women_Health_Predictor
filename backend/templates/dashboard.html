@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-container">
+    <h2>My Health Dashboard</h2>
+    <p>Track your health history here. (Demo Data)</p>
+
+    <div class="grid-container">
+        <div class="card">
+            <h3>Last Checkup</h3>
+            <p>22 Nov 2025</p>
+            <p style="color: green; font-weight: bold;">Healthy</p>
+        </div>
+        <div class="card">
+            <h3>Total Checkups</h3>
+            <p style="font-size: 2rem; font-weight: bold;">5</p>
+        </div>
+        <div class="card">
+            <h3>Next Appointment</h3>
+            <p>Not Scheduled</p>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 2rem;">Health Tips for You</h3>
+    <ul style="list-style: none; padding: 1rem;">
+        <li style="padding: 0.5rem; border-bottom: 1px solid #eee;">✅ Drink 8 glasses of water daily.</li>
+        <li style="padding: 0.5rem; border-bottom: 1px solid #eee;">✅ Include iron-rich foods in your diet.</li>
+        <li style="padding: 0.5rem; border-bottom: 1px solid #eee;">✅ Walk for 30 minutes every day.</li>
+    </ul>
+</div>
+{% endblock %}

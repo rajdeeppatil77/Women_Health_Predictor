@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-container" style="max-width: 800px;">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Health Checkup Form</h2>
+    <form id="predictForm">
+        <div class="grid-container" style="grid-template-columns: 1fr 1fr; padding: 0;">
+            <div class="form-group">
+                <label>Do you feel constantly tired? (Fatigue)</label>
+                <select name="fatigue">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Are your periods irregular?</label>
+                <select name="irregular_periods">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Have you gained weight suddenly?</label>
+                <select name="weight_gain">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Are you experiencing hair loss?</label>
+                <select name="hair_loss">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Excess hair growth on face/body?</label>
+                <select name="excess_hair_growth">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Do you have mood swings?</label>
+                <select name="mood_swings">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Do you have pelvic pain?</label>
+                <select name="pelvic_pain">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Any lump in breast? (Self-check)</label>
+                <select name="lump_in_breast">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Frequent urination?</label>
+                <select name="frequent_urination">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Excessive thirst?</label>
+                <select name="thirst">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button type="submit" class="btn">Analyze Symptoms</button>
+        </div>
+    </form>
+
+    <div id="result"
+        style="display: none; margin-top: 2rem; padding: 1rem; background: #fff; border-radius: 10px; border-left: 5px solid var(--primary);">
+        <h3 id="predictionText"></h3>
+        <p id="recommendationText"></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('predictForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = {};
+        formData.forEach((value, key) => data[key] = parseInt(value));
+
+        try {
+            const response = await fetch('/api/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('predictionText').innerText = "Result: " + result.prediction;
+            document.getElementById('recommendationText').innerText = "Advice: " + result.recommendation;
+        } catch (error) {
+            alert('Error connecting to server');
+        }
+    });
+</script>
+{% endblock %}

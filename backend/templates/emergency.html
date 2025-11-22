@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-container">
+    <h2 style="color: #d63031;">Emergency Contacts</h2>
+    <p>Click to call immediately.</p>
+
+    <div class="grid-container">
+        <div class="card" style="border: 2px solid #d63031;">
+            <div style="font-size: 3rem;">🚑</div>
+            <h3>Ambulance</h3>
+            <a href="tel:102" class="btn" style="background: #d63031;">Call 102</a>
+        </div>
+        <div class="card" style="border: 2px solid #e17055;">
+            <div style="font-size: 3rem;">📞</div>
+            <h3>Women Helpline</h3>
+            <a href="tel:1091" class="btn" style="background: #e17055;">Call 1091</a>
+        </div>
+        <div class="card">
+            <div style="font-size: 3rem;">🤰</div>
+            <h3>Pregnancy Support</h3>
+            <a href="tel:104" class="btn">Call 104</a>
+        </div>
+        <div class="card">
+            <div style="font-size: 3rem;">👩‍⚕️</div>
+            <h3>Asha Worker</h3>
+            <a href="tel:+919876543210" class="btn">Call Local Asha</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
