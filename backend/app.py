@@ -21,12 +21,43 @@ def predict():
     lump_in_breast = data.get('lump_in_breast', 0)
     frequent_urination = data.get('frequent_urination', 0)
     thirst = data.get('thirst', 0)
+    
+    # New Symptoms (Extended)
+    nausea = data.get('nausea', 0)
+    missed_period = data.get('missed_period', 0)
+    unexplained_weight_loss = data.get('unexplained_weight_loss', 0)
+    recurring_fever = data.get('recurring_fever', 0)
+    swollen_lymph_nodes = data.get('swollen_lymph_nodes', 0)
+    burning_urination = data.get('burning_urination', 0)
+    cloudy_urine = data.get('cloudy_urine', 0)
+    abnormal_bleeding = data.get('abnormal_bleeding', 0)
+    vaginal_itching = data.get('vaginal_itching', 0)
+    abnormal_discharge = data.get('abnormal_discharge', 0)
+    fishy_odor = data.get('fishy_odor', 0)
+    hot_flashes = data.get('hot_flashes', 0)
+    night_sweats = data.get('night_sweats', 0)
+    swelling_legs = data.get('swelling_legs', 0)
+    severe_headache = data.get('severe_headache', 0)
+    bone_pain = data.get('bone_pain', 0)
+    muscle_weakness = data.get('muscle_weakness', 0)
+    nipple_discharge = data.get('nipple_discharge', 0)
+    high_bp = data.get('high_bp', 0)
 
-    # Prediction Logic (Matches the logic used to train the model)
+    # Prediction Logic
     prediction = "Healthy"
     
-    if lump_in_breast:
+    if lump_in_breast or nipple_discharge:
         prediction = "Breast Cancer Risk (Consult Doctor)"
+    elif missed_period and nausea and fatigue:
+        prediction = "Possible Pregnancy"
+    elif unexplained_weight_loss and recurring_fever and swollen_lymph_nodes:
+        prediction = "Risk of HIV/AIDS"
+    elif burning_urination and frequent_urination:
+        prediction = "Urinary Tract Infection (UTI)"
+    elif pelvic_pain and irregular_periods and abnormal_bleeding:
+        prediction = "Cervical Cancer Risk"
+    elif pelvic_pain and irregular_periods: 
+        prediction = "Endometriosis Risk"
     elif irregular_periods and excess_hair_growth and weight_gain:
         prediction = "PCOS"
     elif fatigue and hair_loss and weight_gain:
@@ -35,6 +66,20 @@ def predict():
         prediction = "Diabetes"
     elif fatigue and mood_swings and irregular_periods:
         prediction = "Anemia"
+    elif vaginal_itching and abnormal_discharge and not fishy_odor:
+        prediction = "Vaginal Yeast Infection"
+    elif abnormal_discharge and fishy_odor:
+        prediction = "Bacterial Vaginosis"
+    elif severe_headache and swelling_legs and high_bp:
+        prediction = "Preeclampsia (Pregnancy Complication)"
+    elif hot_flashes and night_sweats and irregular_periods:
+        prediction = "Menopause Symptoms"
+    elif bone_pain and muscle_weakness:
+        prediction = "Vitamin D / Calcium Deficiency"
+    elif bone_pain: # Simplified
+        prediction = "Osteoporosis Risk"
+    elif recurring_fever and pelvic_pain and abnormal_discharge:
+        prediction = "Pelvic Inflammatory Disease (PID)"
 
     # Recommendations
     recommendations = {
@@ -43,7 +88,19 @@ def predict():
         "Thyroid Disorder": "Consult an endocrinologist. Get TSH levels checked.",
         "Diabetes": "Consult a general physician. Monitor sugar levels.",
         "Anemia": "Increase iron intake (Spinach, Beetroot). Consult a doctor.",
-        "Breast Cancer Risk (Consult Doctor)": "IMMEDIATE ACTION: Please visit a specialist for a mammogram."
+        "Breast Cancer Risk (Consult Doctor)": "IMMEDIATE ACTION: Please visit a specialist for a mammogram.",
+        "Possible Pregnancy": "Take a home pregnancy test or visit a clinic for confirmation.",
+        "Risk of HIV/AIDS": "Please visit a testing center immediately for a blood test. Early detection is key.",
+        "Urinary Tract Infection (UTI)": "Drink plenty of water and consult a doctor for antibiotics.",
+        "Endometriosis Risk": "Consult a gynecologist for a pelvic exam and ultrasound.",
+        "Cervical Cancer Risk": "IMMEDIATE ACTION: Consult a gynecologist for a Pap smear test.",
+        "Vaginal Yeast Infection": "Consult a doctor for antifungal medication.",
+        "Bacterial Vaginosis": "Consult a gynecologist for antibiotics.",
+        "Preeclampsia (Pregnancy Complication)": "EMERGENCY: Visit a hospital immediately. High BP in pregnancy is dangerous.",
+        "Menopause Symptoms": "Consult a doctor for management strategies if symptoms are severe.",
+        "Vitamin D / Calcium Deficiency": "Consult a doctor for supplements and bone density test.",
+        "Osteoporosis Risk": "Consult an orthopedist for a bone density test.",
+        "Pelvic Inflammatory Disease (PID)": "Consult a gynecologist immediately to prevent complications."
     }
     
     return jsonify({

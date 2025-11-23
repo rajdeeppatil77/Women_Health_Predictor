@@ -76,16 +76,150 @@
                 </select>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <button type="submit" class="btn">Analyze Symptoms</button>
+        <div class="form-group">
+            <label>Do you have nausea or morning sickness?</label>
+            <select name="nausea">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
         </div>
-    </form>
+        <div class="form-group">
+            <label>Have you missed your period?</label>
+            <select name="missed_period">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Have you lost weight without trying?</label>
+            <select name="unexplained_weight_loss">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have recurring fever?</label>
+            <select name="recurring_fever">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Are your lymph nodes swollen?</label>
+            <select name="swollen_lymph_nodes">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you feel burning during urination?</label>
+            <select name="burning_urination">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Is your urine cloudy or strong-smelling?</label>
+            <select name="cloudy_urine">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you experience abnormal vaginal bleeding?</label>
+            <select name="abnormal_bleeding">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you experience vaginal itching?</label>
+            <select name="vaginal_itching">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have abnormal vaginal discharge?</label>
+            <select name="abnormal_discharge">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Does the discharge have a strong/fishy odor?</label>
+            <select name="fishy_odor">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have hot flashes?</label>
+            <select name="hot_flashes">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you experience night sweats?</label>
+            <select name="night_sweats">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have swelling in your legs/feet?</label>
+            <select name="swelling_legs">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have severe headaches?</label>
+            <select name="severe_headache">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have constant bone or joint pain?</label>
+            <select name="bone_pain">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you feel muscle weakness?</label>
+            <select name="muscle_weakness">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Any nipple discharge?</label>
+            <select name="nipple_discharge">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Do you have high blood pressure?</label>
+            <select name="high_bp">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+</div>
+<div style="text-align: center; margin-top: 2rem;">
+    <button type="submit" class="btn">Analyze Symptoms</button>
+</div>
+</form>
 
-    <div id="result"
-        style="display: none; margin-top: 2rem; padding: 1rem; background: #fff; border-radius: 10px; border-left: 5px solid var(--primary);">
-        <h3 id="predictionText"></h3>
-        <p id="recommendationText"></p>
-    </div>
+<div id="result"
+    style="display: none; margin-top: 2rem; padding: 1rem; background: #fff; border-radius: 10px; border-left: 5px solid var(--primary);">
+    <h3 id="predictionText"></h3>
+    <p id="recommendationText"></p>
+</div>
 </div>
 
 <script>
