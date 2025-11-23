@@ -43,43 +43,103 @@ def predict():
     nipple_discharge = data.get('nipple_discharge', 0)
     high_bp = data.get('high_bp', 0)
 
+    # New Symptoms (Tribal Health Expansion)
+    high_fever = data.get('high_fever', 0)
+    persistent_cough = data.get('persistent_cough', 0)
+    blood_in_sputum = data.get('blood_in_sputum', 0)
+    severe_joint_pain = data.get('severe_joint_pain', 0)
+    stomach_pain_fever = data.get('stomach_pain_fever', 0)
+    difficulty_conceiving = data.get('difficulty_conceiving', 0)
+    genital_warts = data.get('genital_warts', 0)
+    is_pregnant = data.get('is_pregnant', 0)
+    gestational_diabetes_symptoms = data.get('gestational_diabetes_symptoms', 0)
+    maternal_sepsis_symptoms = data.get('maternal_sepsis_symptoms', 0)
+    numbness_tingling = data.get('numbness_tingling', 0)
+    pale_skin = data.get('pale_skin', 0)
+    neck_swelling = data.get('neck_swelling', 0)
+    brittle_nails = data.get('brittle_nails', 0)
+    persistent_sadness = data.get('persistent_sadness', 0)
+    anxiety_panic = data.get('anxiety_panic', 0)
+    postpartum_sadness = data.get('postpartum_sadness', 0)
+
     # Prediction Logic
     prediction = "Healthy"
     
-    if lump_in_breast or nipple_discharge:
-        prediction = "Breast Cancer Risk (Consult Doctor)"
-    elif missed_period and nausea and fatigue:
-        prediction = "Possible Pregnancy"
-    elif unexplained_weight_loss and recurring_fever and swollen_lymph_nodes:
-        prediction = "Risk of HIV/AIDS"
+    # --- Infectious Diseases ---
+    if persistent_cough and blood_in_sputum:
+        prediction = "Tuberculosis (TB) Risk"
+    elif high_fever and severe_joint_pain:
+        prediction = "Dengue Fever Risk"
+    elif high_fever and stomach_pain_fever:
+        prediction = "Typhoid Fever Risk"
+    elif high_fever and recurring_fever: # Malaria often has recurring fever
+        prediction = "Malaria Risk"
     elif burning_urination and frequent_urination:
         prediction = "Urinary Tract Infection (UTI)"
-    elif pelvic_pain and irregular_periods and abnormal_bleeding:
-        prediction = "Cervical Cancer Risk"
-    elif pelvic_pain and irregular_periods: 
-        prediction = "Endometriosis Risk"
-    elif irregular_periods and excess_hair_growth and weight_gain:
-        prediction = "PCOS"
-    elif fatigue and hair_loss and weight_gain:
-        prediction = "Thyroid Disorder"
-    elif frequent_urination and thirst and fatigue:
-        prediction = "Diabetes"
-    elif fatigue and mood_swings and irregular_periods:
-        prediction = "Anemia"
+    elif recurring_fever and pelvic_pain and abnormal_discharge:
+        prediction = "Pelvic Inflammatory Disease (PID)"
     elif vaginal_itching and abnormal_discharge and not fishy_odor:
         prediction = "Vaginal Yeast Infection"
     elif abnormal_discharge and fishy_odor:
         prediction = "Bacterial Vaginosis"
-    elif severe_headache and swelling_legs and high_bp:
-        prediction = "Preeclampsia (Pregnancy Complication)"
+    elif unexplained_weight_loss and recurring_fever and swollen_lymph_nodes:
+        prediction = "Risk of HIV/AIDS"
+
+    # --- Maternal Health ---
+    elif is_pregnant and severe_headache and swelling_legs and high_bp:
+        prediction = "Preeclampsia (High Risk Pregnancy)"
+    elif is_pregnant and gestational_diabetes_symptoms:
+        prediction = "Gestational Diabetes"
+    elif maternal_sepsis_symptoms:
+        prediction = "Maternal Sepsis (Emergency)"
+    elif missed_period and nausea and fatigue:
+        prediction = "Possible Pregnancy"
+
+    # --- Reproductive & Gynecological ---
+    elif lump_in_breast or nipple_discharge:
+        prediction = "Breast Cancer Risk (Consult Doctor)"
+    elif pelvic_pain and irregular_periods and abnormal_bleeding:
+        prediction = "Cervical Cancer Risk"
+    elif genital_warts:
+        prediction = "HPV Infection Risk"
+    elif difficulty_conceiving:
+        prediction = "Infertility Risk (Consult Doctor)"
+    elif pelvic_pain and irregular_periods: 
+        prediction = "Endometriosis Risk"
+    elif irregular_periods and excess_hair_growth and weight_gain:
+        prediction = "PCOS"
     elif hot_flashes and night_sweats and irregular_periods:
         prediction = "Menopause Symptoms"
+
+    # --- Nutritional Deficiencies ---
+    elif neck_swelling:
+        prediction = "Iodine Deficiency (Goiter)"
+    elif numbness_tingling and fatigue:
+        prediction = "Vitamin B12 Deficiency"
+    elif pale_skin and fatigue:
+        prediction = "Folate Deficiency / Anemia"
     elif bone_pain and muscle_weakness:
         prediction = "Vitamin D / Calcium Deficiency"
-    elif bone_pain: # Simplified
+    elif brittle_nails and hair_loss:
+        prediction = "Protein Deficiency"
+    elif bone_pain:
         prediction = "Osteoporosis Risk"
-    elif recurring_fever and pelvic_pain and abnormal_discharge:
-        prediction = "Pelvic Inflammatory Disease (PID)"
+    elif fatigue and mood_swings and irregular_periods:
+        prediction = "Anemia"
+
+    # --- Mental Health ---
+    elif postpartum_sadness:
+        prediction = "Postpartum Depression"
+    elif persistent_sadness:
+        prediction = "Depression"
+    elif anxiety_panic:
+        prediction = "Anxiety Disorder"
+        
+    # --- Chronic/Other ---
+    elif fatigue and hair_loss and weight_gain:
+        prediction = "Thyroid Disorder"
+    elif frequent_urination and thirst and fatigue:
+        prediction = "Diabetes"
 
     # Recommendations
     recommendations = {
@@ -87,7 +147,7 @@ def predict():
         "PCOS": "Consult a gynecologist. Maintain a healthy diet and exercise.",
         "Thyroid Disorder": "Consult an endocrinologist. Get TSH levels checked.",
         "Diabetes": "Consult a general physician. Monitor sugar levels.",
-        "Anemia": "Increase iron intake (Spinach, Beetroot). Consult a doctor.",
+        "Anemia": "Increase iron intake (Spinach, Beetroot, Jaggery). Consult a doctor.",
         "Breast Cancer Risk (Consult Doctor)": "IMMEDIATE ACTION: Please visit a specialist for a mammogram.",
         "Possible Pregnancy": "Take a home pregnancy test or visit a clinic for confirmation.",
         "Risk of HIV/AIDS": "Please visit a testing center immediately for a blood test. Early detection is key.",
@@ -96,11 +156,28 @@ def predict():
         "Cervical Cancer Risk": "IMMEDIATE ACTION: Consult a gynecologist for a Pap smear test.",
         "Vaginal Yeast Infection": "Consult a doctor for antifungal medication.",
         "Bacterial Vaginosis": "Consult a gynecologist for antibiotics.",
-        "Preeclampsia (Pregnancy Complication)": "EMERGENCY: Visit a hospital immediately. High BP in pregnancy is dangerous.",
+        "Preeclampsia (High Risk Pregnancy)": "EMERGENCY: Visit a hospital immediately. High BP in pregnancy is dangerous.",
         "Menopause Symptoms": "Consult a doctor for management strategies if symptoms are severe.",
         "Vitamin D / Calcium Deficiency": "Consult a doctor for supplements and bone density test.",
         "Osteoporosis Risk": "Consult an orthopedist for a bone density test.",
-        "Pelvic Inflammatory Disease (PID)": "Consult a gynecologist immediately to prevent complications."
+        "Pelvic Inflammatory Disease (PID)": "Consult a gynecologist immediately to prevent complications.",
+        
+        # Tribal Health Specific Recommendations
+        "Tuberculosis (TB) Risk": "IMMEDIATE ACTION: Visit a government hospital for a free TB test. It is curable.",
+        "Dengue Fever Risk": "Rest, drink plenty of fluids, and visit a doctor immediately. Do not take aspirin.",
+        "Typhoid Fever Risk": "Consult a doctor for antibiotics. Drink only boiled or treated water.",
+        "Malaria Risk": "Visit a health center for a blood test. Use mosquito nets.",
+        "HPV Infection Risk": "Consult a gynecologist. Ask about the HPV vaccine.",
+        "Infertility Risk (Consult Doctor)": "Consult a fertility specialist for evaluation.",
+        "Gestational Diabetes": "Monitor blood sugar. Follow a strict diet plan advised by a doctor.",
+        "Maternal Sepsis (Emergency)": "EMERGENCY: Go to the nearest hospital immediately. This is life-threatening.",
+        "Iodine Deficiency (Goiter)": "Use iodized salt in your cooking. Consult a doctor.",
+        "Vitamin B12 Deficiency": "Eat more dairy, eggs, or fortified foods. Consult a doctor for supplements.",
+        "Folate Deficiency / Anemia": "Eat green leafy vegetables, beans, and lentils. Take iron/folic acid tablets.",
+        "Protein Deficiency": "Increase intake of pulses (dal), eggs, milk, and nuts.",
+        "Postpartum Depression": "Talk to a health worker or counselor. You are not alone; support is available.",
+        "Depression": "Seek help from a mental health professional or counselor.",
+        "Anxiety Disorder": "Practice deep breathing. Consult a doctor if it affects daily life."
     }
     
     return jsonify({
