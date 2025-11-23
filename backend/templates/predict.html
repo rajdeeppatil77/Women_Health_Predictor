@@ -365,8 +365,16 @@
             const result = await response.json();
 
             document.getElementById('result').style.display = 'block';
-            document.getElementById('predictionText').innerText = "Result: " + result.prediction;
-            document.getElementById('recommendationText').innerText = "Advice: " + result.recommendation;
+
+            // Translate dynamic results
+            const prediction = window.translateText ? window.translateText(result.prediction) : result.prediction;
+            const recommendation = window.translateText ? window.translateText(result.recommendation) : result.recommendation;
+
+            const resultLabel = window.translateText ? window.translateText("Result: ") : "Result: ";
+            const adviceLabel = window.translateText ? window.translateText("Advice: ") : "Advice: ";
+
+            document.getElementById('predictionText').innerText = resultLabel + prediction;
+            document.getElementById('recommendationText').innerText = adviceLabel + recommendation;
         } catch (error) {
             alert('Error connecting to server');
         }

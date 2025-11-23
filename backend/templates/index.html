@@ -2,10 +2,32 @@
 
 {% block content %}
 <div class="hero">
-    <h1>Your Health, Your Priority</h1>
-    <p>Simple, fast, and private health guidance for women.</p>
-    <a href="/predict_page" class="btn">Start Health Checkup</a>
+    <h1>Women Health Predictor</h1>
+    <p>Empowering Tribal Women with AI-driven Health Insights</p>
+
+    <!-- Prominent Language Selector -->
+    <div style="margin-top: 1rem; margin-bottom: 2rem;">
+        <p style="margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Choose Language / भाषा चुनें:</p>
+        <button onclick="setLanguage('en')"
+            style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: 1px solid white; background: transparent; color: white; border-radius: 5px; cursor: pointer;">🇺🇸
+            English</button>
+        <button onclick="setLanguage('hi')"
+            style="padding: 0.5rem 1rem; border: 1px solid white; background: transparent; color: white; border-radius: 5px; cursor: pointer;">🇮🇳
+            हिंदी</button>
+    </div>
+
+    <a href="/predict_page" class="btn">Check Health Now</a>
 </div>
+
+<script>
+    function setLanguage(lang) {
+        const select = document.getElementById('languageSelect');
+        if (select) {
+            select.value = lang;
+            select.onchange(); // Trigger the change event
+        }
+    }
+</script>
 
 <div class="glass-container">
     <div class="grid-container">
