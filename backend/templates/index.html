@@ -21,10 +21,17 @@
 
 <script>
     function setLanguage(lang) {
-        const select = document.getElementById('languageSelect');
-        if (select) {
-            select.value = lang;
-            select.onchange(); // Trigger the change event
+        // Call the global toggleLanguage function defined in base.html
+        if (window.toggleLanguage) {
+            window.toggleLanguage(lang);
+
+            // Also update the dropdown visual state if it exists
+            const select = document.getElementById('languageSelect');
+            if (select) {
+                select.value = lang;
+            }
+        } else {
+            console.error("toggleLanguage function not found");
         }
     }
 </script>
