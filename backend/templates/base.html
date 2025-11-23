@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <nav>
         <a href="/" class="logo">🌸 Women Health</a>
@@ -16,6 +18,13 @@
             <li><a href="/dashboard_page">Dashboard</a></li>
             <li><a href="/chat_page">Chat Assistant</a></li>
             <li><a href="/emergency_page" style="color: #e17055;">Emergency</a></li>
+            <li>
+                <select id="languageSelect" onchange="toggleLanguage(this.value)"
+                    style="padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="hi">🇮🇳 Hindi</option>
+                </select>
+            </li>
         </ul>
     </nav>
 
@@ -26,5 +35,108 @@
     <footer style="text-align: center; padding: 2rem; color: #666;">
         <p>© 2025 Women Health Predictor | Empowering Tribal Women</p>
     </footer>
+
+    <script>
+        const translations = {
+            // Navbar
+            "Home": "होम",
+            "Check Health": "स्वास्थ्य जांच",
+            "Dashboard": "डैशबोर्ड",
+            "Chat Assistant": "चैट सहायक",
+            "Emergency": "आपातकालीन",
+
+            // Headings & UI
+            "Women Health Predictor": "महिला स्वास्थ्य प्रेडिक्टर",
+            "Empowering Tribal Women": "आदिवासी महिलाओं का सशक्तिकरण",
+            "Health Checkup Form": "स्वास्थ्य जांच फॉर्म",
+            "Analyze Symptoms": "लक्षणों का विश्लेषण करें",
+            "My Health Dashboard": "मेरा स्वास्थ्य डैशबोर्ड",
+            "Last Checkup": "पिछली जांच",
+            "Total Checkups": "कुल जांच",
+            "Community Stats": "समुदाय के आंकड़े",
+            "Disease Prevalence Trends": "रोग प्रसार के रुझान",
+            "Health Tips for You": "आपके लिए स्वास्थ्य सुझाव",
+
+            // Symptoms (Common)
+            "Do you feel constantly tired? (Fatigue)": "क्या आप लगातार थकान महसूस करती हैं?",
+            "Are your periods irregular?": "क्या आपकी माहवारी अनियमित है?",
+            "Have you gained weight suddenly?": "क्या आपका वजन अचानक बढ़ा है?",
+            "Are you experiencing hair loss?": "क्या आपके बाल झड़ रहे हैं?",
+            "Excess hair growth on face/body?": "क्या चेहरे/शरीर पर अनचाहे बाल हैं?",
+            "Do you have mood swings?": "क्या आपका मूड बार-बार बदलता है?",
+            "Do you have pelvic pain?": "क्या आपको पेडू (निचले पेट) में दर्द है?",
+            "Any lump in breast? (Self-check)": "क्या स्तन में कोई गांठ है?",
+            "Frequent urination?": "क्या बार-बार पेशाब आता है?",
+            "Excessive thirst?": "क्या बहुत ज्यादा प्यास लगती है?",
+
+            // New Symptoms (Tribal/Expanded)
+            "Do you have nausea or morning sickness?": "क्या आपको मतली या उल्टी जैसा लगता है?",
+            "Have you missed your period?": "क्या आपकी माहवारी मिस हो गई है?",
+            "Have you lost weight without trying?": "क्या बिना कोशिश किए वजन कम हुआ है?",
+            "Do you have recurring fever?": "क्या आपको बार-बार बुखार आता है?",
+            "Are your lymph nodes swollen?": "क्या आपकी ग्रंथियों में सूजन है?",
+            "Do you feel burning during urination?": "क्या पेशाब करते समय जलन होती है?",
+            "Is your urine cloudy or strong-smelling?": "क्या पेशाब धुंधला या बदबूदार है?",
+            "Do you experience abnormal vaginal bleeding?": "क्या आपको असामान्य योनि रक्तस्राव हो रहा है?",
+            "Do you experience vaginal itching?": "क्या आपको योनि में खुजली होती है?",
+            "Do you have abnormal vaginal discharge?": "क्या आपको असामान्य योनि स्राव हो रहा है?",
+            "Does the discharge have a strong/fishy odor?": "क्या स्राव में मछली जैसी गंध है?",
+            "Do you have hot flashes?": "क्या आपको अचानक गर्मी लगती है (हॉट फ्लैश)?",
+            "Do you experience night sweats?": "क्या आपको रात में पसीना आता है?",
+            "Do you have swelling in your legs/feet?": "क्या आपके पैरों में सूजन है?",
+            "Do you have severe headaches?": "क्या आपको तेज सिरदर्द होता है?",
+            "Do you have constant bone or joint pain?": "क्या हड्डियों या जोड़ों में लगातार दर्द रहता है?",
+            "Do you feel muscle weakness?": "क्या आपको मांसपेशियों में कमजोरी महसूस होती है?",
+            "Any nipple discharge?": "क्या निप्पल से कोई स्राव हो रहा है?",
+            "Do you have high blood pressure?": "क्या आपका रक्तचाप (BP) बढ़ा हुआ है?",
+            "Do you have high fever with chills?": "क्या आपको ठंड के साथ तेज बुखार है?",
+            "Do you have a persistent cough (more than 2 weeks)?": "क्या आपको 2 सप्ताह से अधिक समय से खांसी है?",
+            "Do you see blood in your sputum/cough?": "क्या थूक/खांसी में खून आता है?",
+            "Do you have severe joint pain (breakbone fever)?": "क्या आपको जोड़ों में बहुत तेज दर्द है?",
+            "Do you have stomach pain with prolonged fever?": "क्या आपको लंबे समय से बुखार और पेट दर्द है?",
+            "Have you been unable to conceive for >1 year?": "क्या आप 1 साल से गर्भधारण नहीं कर पा रही हैं?",
+            "Do you have genital warts or bumps?": "क्या जननांगों पर मस्से या दाने हैं?",
+            "Are you currently pregnant?": "क्या आप अभी गर्भवती हैं?",
+            "If pregnant: Do you have high blood sugar?": "यदि गर्भवती हैं: क्या आपका शुगर बढ़ा हुआ है?",
+            "If pregnant/post-birth: Do you have high fever and foul discharge?": "यदि गर्भवती/प्रसव बाद: क्या तेज बुखार और बदबूदार स्राव है?",
+            "Do you feel numbness or tingling in hands/feet?": "क्या हाथ-पैरों में सुन्नपन या झनझनाहट होती है?",
+            "Is your skin very pale or yellowish?": "क्या आपकी त्वचा बहुत पीली पड़ गई है?",
+            "Do you have a swelling in your neck (Goiter)?": "क्या आपकी गर्दन में सूजन (घेंघा) है?",
+            "Do you have brittle nails and hair?": "क्या आपके नाखून और बाल कमजोर हैं?",
+            "Do you feel persistent sadness or hopelessness?": "क्या आप लगातार उदास या निराश महसूस करती हैं?",
+            "Do you have excessive worry or panic attacks?": "क्या आपको बहुत ज्यादा चिंता या घबराहट होती है?",
+            "Did you recently give birth and feel severe sadness?": "क्या प्रसव के बाद आप बहुत उदास महसूस कर रही हैं?"
+        };
+
+        function toggleLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            if (lang === 'hi') {
+                translatePage();
+            } else {
+                location.reload(); // Reload to reset to English
+            }
+        }
+
+        function translatePage() {
+            // Translate common elements
+            document.querySelectorAll('a, h1, h2, h3, p, label, button, option').forEach(el => {
+                const text = el.innerText.trim();
+                if (translations[text]) {
+                    if (!el.dataset.original) el.dataset.original = text; // Store original
+                    el.innerText = translations[text];
+                }
+            });
+        }
+
+        // Apply preference on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang === 'hi') {
+                document.getElementById('languageSelect').value = 'hi';
+                translatePage();
+            }
+        });
+    </script>
 </body>
+
 </html>
