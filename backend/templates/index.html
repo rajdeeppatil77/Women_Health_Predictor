@@ -5,36 +5,12 @@
     <h1>Women Health Predictor</h1>
     <p>Empowering Tribal Women with AI-driven Health Insights</p>
 
-    <!-- Prominent Language Selector -->
-    <div style="margin-top: 1rem; margin-bottom: 2rem;">
-        <p style="margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Choose Language / भाषा चुनें:</p>
-        <button onclick="setLanguage('en')"
-            style="padding: 0.5rem 1rem; margin-right: 0.5rem; border: 1px solid white; background: transparent; color: white; border-radius: 5px; cursor: pointer;">🇺🇸
-            English</button>
-        <button onclick="setLanguage('hi')"
-            style="padding: 0.5rem 1rem; border: 1px solid white; background: transparent; color: white; border-radius: 5px; cursor: pointer;">🇮🇳
-            हिंदी</button>
-    </div>
+
 
     <a href="/predict_page" class="btn">Check Health Now</a>
 </div>
 
-<script>
-    function setLanguage(lang) {
-        // Call the global toggleLanguage function defined in base.html
-        if (window.toggleLanguage) {
-            window.toggleLanguage(lang);
 
-            // Also update the dropdown visual state if it exists
-            const select = document.getElementById('languageSelect');
-            if (select) {
-                select.value = lang;
-            }
-        } else {
-            console.error("toggleLanguage function not found");
-        }
-    }
-</script>
 
 <div class="glass-container">
     <div class="grid-container">
